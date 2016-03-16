@@ -1,0 +1,34 @@
+.TH TOTPD "1" "April 2015" "" ""
+.SH NAME
+totpd \- a daemon providing serialized access to the YubiKey NEO(-N) OATH applet.
+.SH SYNOPSIS
+.B totpd
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+.PP
+totpd is a daemon providing serialized access to the YubiKey NEO(-N) OATH applet. It provides a unix domain socket for access. Optionally an additional TCP listening port may be specified. This port is supposed to be used for host only networking to allow virtual guests access. Make sure that you properly firewall the totp daemon port if you enable networking.
+.TP
+\fB\-s\fR \fB\fIpathname\fR\fR
+The required configuration file. See the installed example (/etc/neototp.conf.example) for further information.
+.TP
+\fB\-p\fR \fB\fIpathname\fR\fR
+The pid file of the daemon, default is /var/run/totpd.pid.
+.TP
+\fB\-s\fR \fB\fIpathname\fR\fR
+The unix domain socket pathname of the daemon, default is /var/run/totpd.sock.
+.TP
+\fB\-P\fR \fB\fInumber\fR\fR
+The TCP listening port number in the range of 1 to 65535, if not specified which is the default TCP listening is disabled.
+.TP
+\fB\-f\fR
+Do not daemonize and stay in foreground.
+.TP
+\fB\-h\fR
+Show help.
+.SH AUTHOR
+Written by Andreas Steinmetz
+.SH COPYRIGHT
+Copyright \(co 2015 Andreas Steinmetz
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

@@ -1,0 +1,128 @@
+.TH "PAM_RMTTOTP" "8" "04/02/2015" "" ""
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.nh
+.ad l
+.SH "NAME"
+pam_rmttotp \- Module for TOTP authentication using a YubiKey NEO(-N) for guests
+.SH "SYNOPSIS"
+.HP \w'\fBpam_rmttotp\&.so\fR\ 'u
+\fBpam_rmttotp\&.so\fR [\&.\&.\&.]
+.SH "DESCRIPTION"
+.PP
+The \fBpam_rmttotp\fR \s-1PAM\s0 module allows for virtual guest TOTP system authentication using a YubiKey NEO(-N) of the host system. This module uses a virtual serial device which must be connected by the virtualization software to a unix domain socket on the host side. This socket is provided by the totpd daemon.
+.PP
+Please keep in mind that a YubiKey is not the fastest device and that the OATH applet on the YubiKey has a memory limitation of 2048 bytes (each entry consists of the UTF8 entry name and 9 additional bytes) for TOTP tokens. So try not to use a YubiKey on a multi user and/or busy server. It is ok, however, to use a YubiKey even on a busy server if YubiKey based TOTP is restricted to e.g. only the few administrative users.
+.SH "OPTIONS"
+.PP
+\fBtry_first_pass\fR
+.RS 4
+Use password already entered as TOTP token, if specified, otherwise inquire TOTP token.
+.RE
+.PP
+\fBuse_first_pass\fR
+.RS 4
+Require an already entered password which is used as TOTP token.
+.RE
+.PP
+\fBalwaysok\fR
+.RS 4
+Never fail authentication - this is for testing only!
+.RE
+.PP
+\fBconfig=\fR\fB\fIpath\fR\fR
+.RS 4
+The required configuration file. See the installed example (/etc/neototp.conf.example) for further information.
+.RE
+.PP
+\fBdigits=\fR\fB\fInumber\fR\fR
+.RS 4
+The required number of digits for the TOTP token. Valid numbers are 6, 7 and 8 with 6 being the default. If the amount of characters entered exceeds this number the leading characters are assumed to be a prefix as in <prefix><token-digits>. Such a prefix is then used to create an OATH applet entry name in the form of <user>:<prefix>. This allows for multiple real users to share a single logon account but use different tokens. If no such prefix is given the entry name of the OATH applet must be identical to the logon name.
+.RE
+.PP
+\fBwindow=\fR\fB\fInumber\fR\fR
+.RS 4
+The search window (number*30s) from the current time to find a matching TOTP token. The valid range is 0 to 5 with 0 being the default. One should actually use a search window of at least 1 to allow for some clock drift on the client's side.  This is especially true if the client side user has to enter the token number manually which will take some time.
+.RE
+.PP
+\fBcachedb=\fR\fB\fIpath\fR\fR
+.RS 4
+The optional pathname of the GDBM database used for successful authentication cacheing. This database should be deleted during system boot so it is best located in a tmpfs filesystem. If this option is not specified no authentication cacheing takes place.
+.RE
+.PP
+\fBcachehosts=\fR\fB\fIpath\fR\fR
+.RS 4
+The pathname of an optional configuration file specifying the remote hosts for which successful authentiction cacheing is enabled. See the installed example (/etc/authcache.conf.example) for details.
+.RE
+.PP
+\fBretrigger\fR
+.RS 4
+In case of renewed server access update the cached last access time. If this option is not specified and cacheing of valid accesses is enabled the cache entry expires exactly after the cache validity time specified. Note that this option is ignored when cacheing is not activated.
+.RE
+.PP
+\fBvalid=\fR\fB\fInumber\fR\fR
+.RS 4
+The amount of seconds a successful authentication is cached. During the cached period no further TOTP authentication is requested. The valid range is 1 to 86400 seconds with 1800 seconds being the default. Note that this option is ignored when cacheing is not activated.
+.RE
+.PP
+\fBreplaydb=\fR\fB\fIpath\fR\fR
+.RS 4
+The optional pathname of the GDBM database used for authentication replay detection. This database should be deleted during system boot so it is best located in a tmpfs filesystem. If this option is not specified no authentication replay detection takes place.
+.RE
+.PP
+\fBreplayok=\fR\fB\fIpath\fR\fR
+.RS 4
+The pathname of an optional configuration file specifying the remote hosts for which authentiction replay detection is disabled. See the installed example (/etc/replayhosts.conf.example) for details.
+.RE
+.PP
+\fBdevice=\fR\fB\fIpath\fR\fR
+.RS 4
+The required pathname of the virtual serial device to be used for communication with the host totpd.
+.RE
+.PP
+\fBlock=\fR\fB\fIpath\fR\fR
+.RS 4
+The required pathname of the lock file for the virtual serial device, typically something like /var/lock/<lockfile>. This lock file is neccessary to synchronize access to the virtual serial device.
+.SH "MODULE TYPES PROVIDED"
+.PP
+All module types (\fBaccount\fR, \fBauth\fR, \fBpassword\fR and \fBsession\fR) are provided, though \fBaccount\fR and \fBsession\fR currently do nothing whereas \fBpassword\fR will always deny (token change is not possible this way).
+.SH "RETURN VALUES"
+.RE
+.PP
+PAM_SERVICE_ERR
+.RS 4
+Configuration error.
+.RE
+.PP
+PAM_SUCCESS
+.RS 4
+Successful authentification.
+.RE
+.PP
+PAM_AUTH_ERR
+.RS 4
+Authentication failure.
+.RE
+.PP
+PAM_AUTHINFO_UNAVAIL
+.RS 4
+Authentication information not available, e.g. unknown user.
+.RE
+.PP
+PAM_IGNORE
+.RS 4
+Always returned by \fBaccount\fR and \fBsession\fR.
+.RE
+.PP
+PAM_PERM_DENIED
+.RS 4
+Always returned by \fBpassword\fR.
+.RE
+.SH "SEE ALSO"
+.PP
+\fBtotpd\fR(1),
+\fBpam.d\fR(5),
+\fBpam\fR(8)
+.SH "AUTHOR"
+.PP
+pam_rmttotp was written by Andreas Steinmetz.

@@ -1,0 +1,82 @@
+.TH TOTPTOOL "1" "April 2015" "" ""
+.SH NAME
+totptool \- get a TOTP token from a YubiKey NEO(-N) 
+.SH SYNOPSIS
+.B totptool
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+.PP
+totptool is a client utility that retrieves a TOTP token from a YubiKey NEO(-N) and prints it. Optionally it can print its output in a form suitable for xdotool which allows X11 hotkey usage.
+.TP
+\fB\-C\fR \fB\fIcharset\fR\fR
+The command line charset (default: ASCII).
+.TP
+\fB\-I\fR
+Short for -C ISO8859-15.
+.TP
+\fB\-U\fR
+Short for -C UTF8.
+.TP
+\fB\-1\fR
+Use classic slot 1 instead of OATH applet.
+.TP
+\fB\-2\fR
+Use classic slot 2 instead of OATH applet.
+.TP
+\fB\-6\fR
+Calculate 6 digits (slot 1 and slot 2 only).
+.TP
+\fB\-7\fR
+Calculate 7 digits (slot 1 and slot 2 only).
+.TP
+\fB\-8\fR
+Calculate 8 digits (slot 1 and slot 2 only).
+.TP
+\fB\-s\fR \fB\fIserial\fR\fR
+use YubiKey with given serial number
+.TP
+\fB\-u\fR
+use first USB attached YubiKey without serial number
+.TP
+\fB\-n\fR
+use first NFC attached YubiKey
+.TP
+\fB\-p\fR
+Prefix the output with the name given with -N or -X.
+.TP
+\fB\-X\fR \fB\fIprefix\fR\fR
+Output prefix, if specified has priority over -N.
+.TP
+\fB\-x\fR
+Output result in format suitable for xdotool.
+.TP
+\fB\-P\fR \fB\fIpathname\fR\fR
+Pathname of a file containing the OATH applet password. It is strongly recomended that this file is only accessible by the user.
+.TP
+\fB\-N\fR \fB\fIname\fR\fR
+The token name, i.e. the entry name of the OATH applet.
+.TP
+\fB\-v\fR
+Print error message in case of failure.
+.TP
+\fB\-r\fR
+Append CR to output.
+.TP
+\fB\-l\fR
+Append LF to output.
+.TP
+\fB\-a\fR
+Switch to PIV applet after processing.
+.TP
+\fB\-A\fR
+Switch to OpenPGP applet after processing.
+.TP
+\fB\-h\fR
+Show help.
+.SH AUTHOR
+Written by Andreas Steinmetz
+.SH COPYRIGHT
+Copyright \(co 2015 Andreas Steinmetz
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

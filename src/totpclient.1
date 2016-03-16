@@ -1,0 +1,58 @@
+.TH TOTPCLIENT "1" "April 2015" "" ""
+.SH NAME
+totpclient \- non PAM token verification access to the TOTP daemon
+.SH SYNOPSIS
+.B totpclient
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+.PP
+totpclient is a non PAM token verification access utility to the TOTP daemon. It will probably not work right out of the box as it typically will require access to the totp unix domain socket or a virtual serial device as well as the configuration file. You will have to adapt permissions properly and make totpclient suid/sgid as required for your system.
+.SH COMMON OPTIONS
+.TP
+\fB\-n\fR \fB\fIname\fR\fR
+The authentication name, i.e. the OATH applet entry name. There is no default. This option is mandatory.
+.TP
+\fB\-t\fR \fB\fItoken\fR\fR
+The actual authentication token or - to read the token from standard input. There is no default. This option is mandatory.
+.TP
+\fB\-d\fR \fB\fIdigits\fR\fR
+The amount of token digits in the range of 6 to 8. The default is 6 digits.
+.TP
+\fB\-w\fR \fB\fIwindow\fR\fR
+The search window in window*30s to find a matching authentication token. The default is 0 though you are advised to use a window of at least 1 to allow for some client clock drift.
+.TP
+\fB\-c\fR \fB\fIpathname\fR\fR
+The required configuration file. See the installed example (/etc/neototp.conf.example) for further information.
+.TP
+\fB\-h\fR
+Show help.
+.SH UNIX DOMAIN SOCKET OPTIONS
+.TP
+\fB\-s\fR \fB\fIpathname\fR\fR
+The pathname of the totpd listening unix domain socket, default is /var/run/totpd.sock.
+.SH SERIAL LINE OPTIONS
+.TP
+\fB-D\fR \fB\fIpathname\fR\fR
+The pathname of the virtual serial device to be used for communication with the host totpd.
+.TP
+\fB-L\fR \fB\fIpathname\fR\fR
+The pathname of the lock file for the virtual serial device, typically something like /var/lock/<lockfile>. This lock file is neccessary to synchronize access to the virtual serial device.
+.SH TCP OPTIONS
+.TP
+\fB-H\fR \fB\fIhostaddress\fR\fR
+The address (hostname or ip) of the remote host running totpd.
+.TP
+\fB-P\fR \fB\fInumber\fR\fR
+The port number (1-65535) the remote totpd is listening on.
+.TP
+\fB-i\fR \fB\fIdevice\fR\fR
+The network interface to be used in case an IPv6 link local address is specified. For all other address types this option must not be specified.
+.SH RETURN VALUES
+totpclient will return 0 in case of successful authentication and 1 in every other case.
+.SH AUTHOR
+Written by Andreas Steinmetz
+.SH COPYRIGHT
+Copyright \(co 2015 Andreas Steinmetz
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

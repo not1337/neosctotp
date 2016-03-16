@@ -1,0 +1,17 @@
+#
+# Sample configuration file
+#
+# slot1=<slot1-user>
+# slot2=<slot2-user>
+# neokey=<oathapplet-password>
+# netkey=<communication-password>
+# serial=<yubikey-serial-number>
+# tryusb=0|1
+# reset=none|neo|ndef|pgp|piv
+#
+# A user string consists of the unix user, optionally followed by ':' and
+# the prefix sent by the user before the actual token, e.g. if the
+# unix user name is 'guest', the token length is 6 digits and the user
+# inputs 'test123456', the resulting user is 'guest:test'.
+# This allows for multiple tokens for a user.
+#

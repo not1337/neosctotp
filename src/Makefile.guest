@@ -1,0 +1,13 @@
+all: pam_rmttotp.so pam_nettotp.so totpclient
+
+pam_rmttotp.so: pam_rmttotp.c pamcommon.h config.h client.h dbstuff.h sha1.h
+	gcc -Wall -O3 -fPIC -shared -rdynamic -Wl,-x -Wl,-S -o $@ $< -lpam -lgdbm
+
+pam_nettotp.so: pam_nettotp.c pamcommon.h config.h client.h dbstuff.h sha1.h
+	gcc -Wall -O3 -fPIC -shared -rdynamic -Wl,-x -Wl,-S -o $@ $< -lpam -lgdbm
+
+totpclient: totpclient.c config.h client.h sha1.h
+	gcc -Wall -O3 -s -o $@ $<
+
+clean:
+	rm -f pam_rmttotp.so pam_nettotp.so totpclient
