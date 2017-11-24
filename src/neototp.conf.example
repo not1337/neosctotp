@@ -5,7 +5,7 @@
 # slot2=<slot2-user>
 # neokey=<oathapplet-password>
 # netkey=<communication-password>
-# serial=<yubikey-serial-number>
+# serial=<yubikey-serial-number>|-1|-2|-3|-4
 # tryusb=0|1
 # reset=none|neo|ndef|pgp|piv
 #
@@ -14,4 +14,10 @@
 # unix user name is 'guest', the token length is 6 digits and the user
 # inputs 'test123456', the resulting user is 'guest:test'.
 # This allows for multiple tokens for a user.
+# The special values for the serial number are:
+#  0 the first yubikey found
+# -1 the first usb attached yubikey found
+# -2 the first nfc attached yubikey found
+# -3 the first usb attached yubikey 4 with u2f enabled found
+# -4 the first usb attached yubikey 4 with u2f disabled found
 #

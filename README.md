@@ -1,9 +1,9 @@
 #neosctotp
-TOTP authentication using the YubiKey NEO(-N)
+TOTP authentication using the YubiKey NEO(-N)/4 (nano)
 
-The stuff contained in this directory allows a YubiKey NEO(-N) to be used on
-a client or on a server for TOTP two factor authentication. Please keep in
-mind that a YubiKey is not the fastest device and that the OATH applet has
+The stuff contained in this directory allows a YubiKey NEO(-N)/4 (nano) to be
+used on a client or on a server for TOTP two factor authentication. Please keep
+in mind that a YubiKey is not the fastest device and that the OATH applet has
 a memory limitation of 2048 bytes (each entry consists of the UTF8 entry
 name and 9 additional bytes) for TOTP tokens. So try not to use a YubiKey on
 a multi user and/or busy server. It is ok, however, to use a YubiKey even

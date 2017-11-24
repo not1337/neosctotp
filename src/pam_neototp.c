@@ -74,7 +74,8 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh,int flags,int argc,
 	else if(!strncmp(argv[i],"replayok=",9))rcmp=&argv[i][9];
 	else if(!strncmp(argv[i],"socket=",7))sock=&argv[i][7];
 
-	if(config_parse((char *)config,0)||digits<6||digits>8||serial<0||
+	if(config_parse((char *)config,0)||digits<6||digits>8||
+		serial<NEOSC_NOU2F_YUBIKEY4||
 		window<0||window>5||valid<=0||valid>86400)
 	{
 		r=PAM_SERVICE_ERR;
